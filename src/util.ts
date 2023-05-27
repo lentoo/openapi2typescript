@@ -42,7 +42,13 @@ export const prettierFile = (content: string): [string, boolean] => {
 
 export const writeFile = (folderPath: string, fileName: string, content: string) => {
   const filePath = path.join(folderPath, fileName);
-  mkdir(path.dirname(filePath));
+  if (!fs.existsSync(path.dirname(filePath))) {
+    mkdir(path.dirname(filePath));
+  }
+
+  if (fs.existsSync(filePath)) {
+    fs.rmSync(filePath);
+  }
   const [prettierContent, hasError] = prettierFile(content);
   fs.writeFileSync(filePath, prettierContent, {
     encoding: 'utf8',
@@ -90,9 +96,9 @@ export const formatApiInfo = (apiInfo: Record<string, any>): any => {
   });
 
   for (const child_path in apiInfo.schema.paths) {
-    apiInfo.schema.paths[child_path].post.tags = apiInfo.schema.paths[
-      child_path
-    ].post.tags.map((tag: string) => getTagName(tag));
+    apiInfo.schema.paths[child_path].post.tags = apiInfo.schema.paths[child_path].post.tags.map(
+      (tag: string) => getTagName(tag),
+    );
   }
 
   return apiInfo;
@@ -209,3 +215,9 @@ function combineParams(
 export const stripDot = (str: string) => {
   return str.replace(/[-_ .](\w)/g, (_all, letter) => letter.toUpperCase());
 };
+
+export function toCamelCase(str: string) {
+  return str.replace(/-([a-z])/g, function (match, letter) {
+    return letter.toUpperCase();
+  });
+}

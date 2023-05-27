@@ -23,6 +23,14 @@ export type GenerateServiceProps = {
   requestLibPath?: string;
   requestImportStatement?: string;
   /**
+   * 指定生成的tags
+   */
+  tags?: string[];
+  /**
+   * 启动时是否清空目录
+   */
+  clear?: boolean;
+  /**
    * api 的前缀
    */
   apiPrefix?:
