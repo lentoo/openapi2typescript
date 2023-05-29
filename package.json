@@ -1,5 +1,5 @@
 {
-  "name": "@umijs/openapi",
+  "name": "@scp-constructions/openapi",
   "version": "1.8.3",
   "description": "",
   "repository": {
@@ -18,7 +18,14 @@
     "localConvert4Project": "rm -rf ./test/servers/ ./test/file-servers/ &&  npm run build && cd ./test && node ./test.js && cd .. && rm -rf /Users/fd/wj/psp-web-pro/src/services/wj && mv ./test/servers/api/  /Users/fd/wj/psp-web-pro/src/services/wj",
     "prepublishOnly": "npm run build && np --no-cleanup --yolo --no-publish --any-branch",
     "start": "tsc -w",
-    "test": "rm -rf ./test/servers/ ./test/file-servers/ &&  npm run build && cd ./test && node ./test.js && cd .."
+    "test": "rm -rf ./test/servers/ ./test/file-servers/ &&  npm run build && cd ./test && node ./test.js && cd ..",
+    "prerelease": "pnpm version prerelease",
+    "patch": "pnpm version patch",
+    "minor": "pnpm version minor",
+    "major": "npm version major"
+  },
+  "publishConfig": {
+    "@scp-constructions:registry": "http://nexus.ur.com.cn/repository/npm-host"
   },
   "dependencies": {
     "@umijs/fabric": "^2.5.6",
