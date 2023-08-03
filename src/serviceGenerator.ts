@@ -391,14 +391,16 @@ class ServiceGenerator {
       serviceTP = serviceTP.filter((r) => renameTags.includes(r.instanceName));
     }
     let interfaceTP = this.getInterfaceTP();
-    serviceTP.forEach((service) => {
+    serviceTP.forEach((service, index) => {
       const serviceInterfaceTP = interfaceTP.filter(
-        (r) =>
-          service.list.map((i) => i.typeName).includes(r.typeName) ||
+        (r) => {
+          return service.list.map((i) => i.typeName).includes(r.typeName) ||
           service.list.map((i) => i.response.type.split('.')[1]).includes(r.typeName) ||
-          service.list.map((i) => i.body?.type.split('.')[1]).includes(r.typeName),
+          service.list.map((i) => i.body?.type?.replace('[]', '').split('.')[1]).includes(r.typeName)
+        }
       );
       const deepDTO = {};
+      
       serviceInterfaceTP.forEach((type) => {
         this.traverse(type, interfaceTP, deepDTO);
       });
