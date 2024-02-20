@@ -31,6 +31,11 @@ generateService({
 npm run openapi
 ```
 
+命令行调用
+```
+npm run gen-api
+```
+
 ## 参数
 
 | 属性 | 必填 | 备注 | 类型 | 默认值 |

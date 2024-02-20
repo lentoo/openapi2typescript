@@ -1,6 +1,6 @@
 // const { generateService } = require('@yourenz/umijs-openapi')
 const mri = require('mri')
-const { generateService } = require('../index')
+const { generateService } = require('../dist/index')
 const path = require('path')
 
 /**
@@ -8,7 +8,7 @@ const path = require('path')
  * package.json scripts 增加一条：ts-node --skip-project openapi.config.ts
  */
 
-function formatName(name) {
+function formatName(name: string) {
   return name.replace(/-(\w)/g, function (all, letter) {
     return letter.toUpperCase()
   })
@@ -34,7 +34,7 @@ const includeController: string[] = []
 
 const pullServer: APIServices[] = isCmd ? [cmdArgv.server] : ['scp-quality-web']
 
-const projectNameMap = {
+const projectNameMap: any = {
   'scp-saas-web': 'common',
   'scp-quality-web': 'quality',
   'scp-settlement-web': 'settlement-web',
@@ -63,14 +63,14 @@ swaggerConfig.forEach((config) => {
     requestLibPath: '@/utils/request',
     ...config,
     hook: {
-      customFunctionName(data) {
+      customFunctionName(data: any) {
         const method = data.method
         const meta = data.path.replace('/resource', '')
         const metaArr = meta
           .substr(1)
           .split('/')
-          .filter((v) => !!v)
-          .map((v, i) => {
+          .filter((v: any) => !!v)
+          .map((v: any, i: any) => {
             const params = v.match(/^\{(.*?)\}$/)
             const format = formatName(v)
             const name = params ? `$${params[1]}` : i !== 0 ? `${format[0].toUpperCase()}${format.substr(1)}` : format
